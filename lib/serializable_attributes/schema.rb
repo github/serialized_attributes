@@ -130,10 +130,10 @@ module SerializableAttributes
 
       @model.before_save do |r|
         schema = r.class.send("#{data_field}_schema")
-        data = schema.encode(r.send(data_field))
-        if r.send(blob_field) != data
-          r.send("#{blob_field}=", data)
-        end
+        old_data = r.send(blob_field)
+        new_data = schema.encode(r.send(data_field))
+        new_data.force_encoding(old_data.encoding) if old_data && new_data.respond_to?(:force_encoding)
+        r.send("#{blob_field}=", new_data)
       end
     end
 
