@@ -61,10 +61,11 @@ module SerializableAttributes
       case input
         when ::Time   then input
         when ::String then ::Time.parse(input)
+        when ::Fixnum then ::Time.at(input)
         else input.to_time
       end
     end
-    def encode(input) input ? input.utc.xmlschema : nil end
+    def encode(input) input ? input.to_i : nil end
   end
 
   class Array < AttributeType
