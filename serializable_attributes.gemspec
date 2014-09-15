@@ -46,6 +46,7 @@ Gem::Specification.new do |s|
     gemfiles/ar-2.3.gemfile
     gemfiles/ar-3.0.gemfile
     gemfiles/ar-3.1.gemfile
+    gemfiles/ar-3.2.gemfile
     init.rb
     lib/serializable_attributes.rb
     lib/serializable_attributes/duplicable.rb
