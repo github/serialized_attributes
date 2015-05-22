@@ -2,5 +2,7 @@ source "http://rubygems.org"
 
 gem "rake"
 gem "activerecord", "~> 4.0.13"
+gem "pry"
+gem "sqlite3"
 
 gemspec :path=>"../"

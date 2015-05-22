@@ -75,9 +75,11 @@ formatters.each do |fmt|
     end
 
     test "reloads serialized data" do
-      @changed.id = 481516
-      assert_equal @record.title, @changed.reload(2342).title
-      assert_equal @record.age,   @changed.age
+      @record.save
+      @record.title = "def"
+      @record.age = 6
+      assert_equal "abc", @record.reload.title
+      assert_equal 5, @record.age
     end
 
     test "initialized model is not changed" do
@@ -102,7 +104,7 @@ formatters.each do |fmt|
       @record.raw_data = self.class.format.encode(self.class.raw_hash.merge(:foo => :bar))
       assert_not_nil @record.title     # no undefined foo= error
       @record.title = "changed" # force a change / rewrite
-      assert_equal false, @record.save # extra before_save cancels the operation
+      assert @record.save
       assert_equal self.class.raw_hash.merge(:active => 1).stringify_keys.keys.sort, self.class.format.decode(@record.raw_data).keys.sort
     end
 
@@ -247,7 +249,7 @@ formatters.each do |fmt|
      test "attempts to re-encode data when saving" do
        assert_not_nil @record.title
        @record.raw_data = nil
-       assert_equal false, @record.save # extra before_save cancels the operation
+       assert @record.save
        expected = self.class.raw_hash.merge \
          :active   => true,
          :birthday => Time.parse(self.class.raw_hash[:birthday])
