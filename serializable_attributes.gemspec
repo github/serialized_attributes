@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   ## require 'NAME.rb' or'/lib/NAME/file.rb' can be as require 'NAME/file.rb'
   s.require_paths = %w[lib]
 
-  s.add_dependency "activerecord", [">= 2.2.0", "< 3.2.0"]
+  s.add_dependency "activerecord", [">= 2.2.0", "< 4.1"]
 
   ## Leave this section as-is. It will be automatically generated from the
   ## contents of your Git repository via the gemspec task. DO NOT REMOVE
@@ -46,6 +46,8 @@ Gem::Specification.new do |s|
     gemfiles/ar-2.3.gemfile
     gemfiles/ar-3.0.gemfile
     gemfiles/ar-3.1.gemfile
+    gemfiles/ar-3.2.gemfile
+    gemfiles/ar-4.0.gemfile
     init.rb
     lib/serializable_attributes.rb
     lib/serializable_attributes/duplicable.rb
