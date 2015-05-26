@@ -16,52 +16,20 @@ begin
 rescue LoadError
 end
 
-module SerializableMethods
-  def table_exists?
-    false
-  end
+ActiveRecord::Base.establish_connection(
+  :adapter  => "sqlite3",
+  :database => ":memory:",
+)
 
-  def columns
-    []
-  end
+ActiveRecord::Base.connection.execute(<<-SQL)
+  CREATE TABLE serialized_records (id INTEGER PRIMARY KEY, raw_data BLOB)
+SQL
 
-  def column_defaults
-    {}
-  end
-
-  def columns_hash
-    {}
-  end
-
-  def primary_key
-    "id"
-  end
-
-  def transaction
-    yield
-  rescue ActiveRecord::Rollback
-  end
-end
+ActiveRecord::Base.connection.execute(<<-SQL)
+  CREATE TABLE serialized_record_with_defaults (id INT NOT NULL PRIMARY KEY, raw_data BLOB)
+SQL
 
 class SerializedRecord < ActiveRecord::Base
-  extend SerializableMethods
-
-  class << self
-    attr_accessor :stubbed_raw_data
-  end
-
-  def self.find(n, options)
-    if n != 481516 && options != 2342
-      raise ArgumentError, "This is supposed to be a test!"
-    end
-    r = new
-    r.id = 481516
-    r.raw_data = @stubbed_raw_data
-    r
-  end
-
-  attr_accessor :raw_data
-
   serialize_attributes :data do
     string  :title, :body
     integer :age
@@ -76,18 +44,9 @@ class SerializedRecord < ActiveRecord::Base
         :started_at => :time
       }
   end
-
-  before_save { |r| false } # cancel the save
-
-  def add_to_transaction
-  end
 end
 
 class SerializedRecordWithDefaults < ActiveRecord::Base
-  extend SerializableMethods
-
-  attr_accessor :raw_data
-
   serialize_attributes :data do
     string  :title, :body, :default => 'blank'
     integer :age,          :default => 18
@@ -98,10 +57,5 @@ class SerializedRecordWithDefaults < ActiveRecord::Base
     hash    :extras,       :default => {:a => 1}
     boolean :clearance,    :default => nil
     string  :symbol,       :default => :foo
-  end
-
-  before_save { |r| false } # cancel the save
-
-  def add_to_transaction
   end
 end

@@ -1,0 +1,7 @@
+source "http://rubygems.org"
+
+gem "rake"
+gem "activerecord", "~> 3.2.19"
+gem "sqlite3"
+
+gemspec :path=>"../"
