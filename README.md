@@ -1,3 +1,9 @@
+# UNMAINTAINED
+
+This repo is no longer being maintained as of 2015-08-25.
+
+---
+
 # SerializedAttributes
 
 SerializedAttributes allows you to add an encoded hash to an ActiveRecord model.  
