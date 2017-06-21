@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   ## If your rubyforge_project name is different, then edit it and comment out
   ## the sub! line in the Rakefile
   s.name              = 'serializable_attributes'
-  s.version           = '0.9.0'
+  s.version           = '0.10.0'
   s.date              = '2011-12-05'
   s.rubyforge_project = 'serializable_attributes'
 
